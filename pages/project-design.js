@@ -7,13 +7,14 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function Home() {
-  const {datos, EliminarTarea} = useContext(DatosContext)
+const projectDesign = () => {
+  const {datosA, EliminarTareaA} = useContext(DatosContext)
+  console.log(datosA)
   const router = useRouter();
   const columns = [
-    {headerName: "Acciones", width:200, type:"actions", field: "actions" ,renderCell:(params)=> <ButtonGroup>
+    {headerName: "Acciones", width:200, type:"actions", renderCell:(params)=> <ButtonGroup>
     <IconButton aria-label="eliminar">
-     <DeleteIcon onClick={() => EliminarTarea(params.id)} color="error"/>
+     <DeleteIcon onClick={() => EliminarTareaA(params.id)} color="error"/>
    </IconButton>
    <IconButton aria-label="edit">
      <EditIcon  onClick={() => router.push(`/${params.row.id}`)}/>
@@ -28,7 +29,7 @@ export default function Home() {
   return (
     <div>
       <p>
-      Agency 606 Projects Marketing
+      Agency 606 Projects Design
       </p>
       <Button
         variant="contained"
@@ -37,7 +38,7 @@ export default function Home() {
       <br />
     <div style={{ height: 500, width: "100%" }}>
       <DataGrid 
-        rows={datos}
+        rows={datosA}
         columns={columns}
         pageSize={7}
         rowsPerPageOptions={[7]}   
@@ -46,3 +47,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default projectDesign
