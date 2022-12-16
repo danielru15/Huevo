@@ -58,7 +58,7 @@ const Form = () => {
                 <TextField   label="Dia" type="date" value={Dia} onChange={e => setDia(e.target.value)}/>
                 <TextField   label="Tarea" value={Tarea} onChange={e => setTarea(e.target.value)}/>
                 <TextField   label="score"value={Score} onChange={e => setScore(e.target.value)}/>
-                <Switch label="Realizado" value={Realizado} onChange={e => setRealizado(e.target.value)}/>
+                <Switch label="Realizado" value={Realizado} onChange={e => setRealizado(true)}/>
                 <FormControl>
                   <Select
                     value={option}
