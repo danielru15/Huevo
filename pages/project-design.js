@@ -16,6 +16,7 @@ const projectDesign = () => {
         EliminarTarea={EliminarTareaA}
         ActualizarTarea={ActualizarTarea}
         datos={datosA}
+        name={"Agency 606 Projects Design"}
       />
     </>
   )

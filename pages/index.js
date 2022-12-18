@@ -18,6 +18,7 @@ export default function Home() {
         datos={datos}
         EliminarTarea={EliminarTarea}
         ActualizarTarea={ActualizarTarea}
+        name="Agency 606 Projects Marketing"
       />
     </>
   )

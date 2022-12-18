@@ -7,8 +7,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useRouter } from "next/router";
 import Grafico from './Grafico';
+import * as XLSX from 'xlsx';
 
-const InformeCard = ({datos,EliminarTarea}) => {
+const InformeCard = ({datos,EliminarTarea,name}) => {
   const router = useRouter();
   const [Filtro, setFiltrar] = useState()
     const tableRef = useRef(null);
@@ -19,6 +20,14 @@ const InformeCard = ({datos,EliminarTarea}) => {
     let porcent_Tareas_Realizadas = (Total_Tareas_Realizadas/Total_Tareas)*100
     let porcent_Tareas_Pendientes = (Total_Tareas_pendientes/Total_Tareas) * 100
      
+    const downloadxls = (e, data) => {
+      e.preventDefault();
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, `${name}`);
+      /* generate XLSX file and send to client */
+      XLSX.writeFile(wb, "Informe.xls");
+    };
     
   
   return (
@@ -57,10 +66,13 @@ const InformeCard = ({datos,EliminarTarea}) => {
   
           </Grid>
         </Grid>
+        <ButtonGroup>
         <Button
         variant="contained"
         onClick={() => router.push("/CrearTarea")}
       >Crear Tarea</Button>
+      <Button onClick={(e) => {downloadxls(e, Filtro?Filtro:datos)}} variant="contained" color='success'>Descargar</Button>
+      </ButtonGroup>
         <TextField fullWidth margin="dense"   onChange={e => setFiltrar(datos.filter((dato) => dato.Nombre.toLowerCase().includes(e.target.value.toLocaleLowerCase())) )} label="Buscar" />
         <TableContainer>
         <Table l={{width:"max-content"}} aria-label="simple table" ref={tableRef}>
