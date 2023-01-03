@@ -6,7 +6,7 @@ import { DatosContext } from "../context/useContext"
 
 
 const projectDesign = () => {
-  const {datosA, EliminarTareaA,ActualizarTarea} = useContext(DatosContext)
+  const {datosA, EliminarTareaA,ActualizarTarea,EliminarAllTarea} = useContext(DatosContext)
   const router = useRouter();
   
   return (
@@ -16,6 +16,8 @@ const projectDesign = () => {
         EliminarTarea={EliminarTareaA}
         ActualizarTarea={ActualizarTarea}
         datos={datosA}
+        EliminarAllTarea={EliminarAllTarea}
+        datab="AgencyProjects"
         name={"Agency 606 Projects Design"}
       />
     </>

@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import Grafico from './Grafico';
 import * as XLSX from 'xlsx';
 
-const InformeCard = ({datos,EliminarTarea,name}) => {
+const InformeCard = ({datos,EliminarTarea,EliminarAllTarea,name,datab}) => {
   const router = useRouter();
   const [Filtro, setFiltrar] = useState()
     const tableRef = useRef(null);
@@ -28,8 +28,13 @@ const InformeCard = ({datos,EliminarTarea,name}) => {
       /* generate XLSX file and send to client */
       XLSX.writeFile(wb, "Informe.xls");
     };
-    
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      EliminarAllTarea(datos,datab)
+    }
   
+    
   return (
     <>
     <Grid container spacing={1} marginTop={2} marginBottom={4} >
@@ -72,6 +77,7 @@ const InformeCard = ({datos,EliminarTarea,name}) => {
         onClick={() => router.push("/CrearTarea")}
       >Crear Tarea</Button>
       <Button onClick={(e) => {downloadxls(e, Filtro?Filtro:datos)}} variant="contained" color='success'>Descargar</Button>
+      <Button onClick={handleSubmit} variant="contained" color='error'>Eliminar todo</Button>
       </ButtonGroup>
         <TextField fullWidth margin="dense"   onChange={e => setFiltrar(datos.filter((dato) => dato.Nombre.toLowerCase().includes(e.target.value.toLocaleLowerCase())) )} label="Buscar" />
         <TableContainer>
@@ -82,7 +88,6 @@ const InformeCard = ({datos,EliminarTarea,name}) => {
               <TableCell style={{position: 'sticky',left: 0,background: 'white',zIndex: 800,}}>Nombre</TableCell>
               <TableCell>Dia</TableCell>
               <TableCell>Tarea</TableCell>
-              <TableCell>Score</TableCell>
               <TableCell>Realizado</TableCell>
             </TableRow>
           </TableHead>
@@ -108,7 +113,6 @@ const InformeCard = ({datos,EliminarTarea,name}) => {
                   }}>{dato.Nombre}</TableCell>
                   <TableCell>{dato.Dia}</TableCell>
                   <TableCell>{dato.Tarea}</TableCell>
-                  <TableCell>{dato.Score}</TableCell>
                   <TableCell>{dato.Realizado === true ? 'Completada' : 'Por completar' }</TableCell>
                 </TableRow>
               ))
@@ -133,7 +137,6 @@ const InformeCard = ({datos,EliminarTarea,name}) => {
                   }}>{dato.Nombre}</TableCell>
                   <TableCell>{dato.Dia}</TableCell>
                   <TableCell>{dato.Tarea}</TableCell>
-                  <TableCell>{dato.Score}</TableCell>
                   <TableCell>{dato.Realizado === true ? 'Completada' : 'Por completar' }</TableCell>
                 </TableRow>
               ))

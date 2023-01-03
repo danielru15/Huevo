@@ -23,7 +23,6 @@ export const DatosProvider = ({ children }) => {
                 Nombre:Nombre,
                 Dia:Dia,
                 Tarea:Tarea,
-                Score:Score,
                 Realizado:Realizado,
                 option:option
             })
@@ -41,7 +40,6 @@ export const DatosProvider = ({ children }) => {
             Nombre:Nombre,
             Dia:Dia,
             Tarea:Tarea,
-            Score:Score,
             Realizado:Realizado
         })
             alert('Tarea Actualizada')
@@ -59,6 +57,20 @@ const EliminarTarea = async (id) => {
     }
 }
 
+//Eliminar todas las tareas
+
+const EliminarAllTarea = async (datos, datab) => {
+await datos.forEach(element => {
+  const taskDocRef = doc(db,datab,element.id)
+  try{
+     deleteDoc(taskDocRef)
+  } catch (err) {
+    alert(err)
+  }
+  
+})
+}
+
 const EliminarTareaA = async (id) => {
     const taskDocRef = doc(db, 'AgencyProjects', id)
     try{
@@ -69,8 +81,8 @@ const EliminarTareaA = async (id) => {
 }
  // Mostrar Datos
  useEffect(() => {
-    const AgencyMarketing = query(collection(db, 'AgencyMarketing'),orderBy("Nombre", "asc" ) )
-    const Ab = query(collection(db, 'AgencyProjects'),orderBy("Nombre", "asc" ))
+    const AgencyMarketing = query(collection(db, 'AgencyMarketing'),orderBy("Nombre", "asc"), orderBy("Dia") )
+    const Ab = query(collection(db, 'AgencyProjects'),orderBy("Nombre", "asc" ), orderBy("Dia", "asc"))
 
     onSnapshot(AgencyMarketing, (querySnapshot) => {
       setDatos(querySnapshot.docs.map(doc => ({
@@ -99,6 +111,7 @@ const EliminarTareaA = async (id) => {
   
     return (
         <DatosContext.Provider value={{
+          EliminarAllTarea,
             datosA,
             datos,
             option, 

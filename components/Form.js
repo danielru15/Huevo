@@ -1,4 +1,4 @@
-import { FormGroup, FormLabel,Box,TextField, Switch , Button, FormControl, Select, MenuItem} from '@mui/material'
+import { FormGroup, FormLabel,Box,TextField, Switch , Button, FormControl, Select, MenuItem, InputLabel} from '@mui/material'
 import React, {useEffect} from 'react'
 import {useContext} from 'react'
 import { DatosContext } from "../context/useContext"
@@ -14,8 +14,6 @@ const Form = () => {
       setDia,
       Tarea, 
       setTarea,
-      Score, 
-      setScore,
       Realizado, 
       setRealizado,
       CrearTarea,
@@ -24,15 +22,21 @@ const Form = () => {
   datosA} = useContext(DatosContext)
 
 
+  console.log(Realizado)
       useEffect(() => {
         if(query.id) {
           const enc = datos.find(dato => dato.id === query.id) || datosA.find(dato => dato.id === query.id)
           setNombre(enc.Nombre)
           setDia(enc.Dia)
           setTarea(enc.Tarea)
-          setScore(enc.Score)
           setRealizado(enc.Realizado)
           setOption(enc.option)
+        }else if (!query.id){
+          setNombre("")
+          setDia("")
+          setTarea("")
+          setRealizado("")
+          setOption(false)
         }
 
       }, [])
@@ -55,20 +59,42 @@ const Form = () => {
             <FormLabel>Crear Tareas</FormLabel>
             <Box sx={{ "& > :not(style)": { m: 1 } }} noValidate autoComplete="off">
                 <TextField   label="Nombre" value={Nombre} onChange={e => setNombre(e.target.value)}/>
-                <TextField   label="Dia" type="date" value={Dia} onChange={e => setDia(e.target.value)}/>
-                <TextField   label="Tarea" value={Tarea} onChange={e => setTarea(e.target.value)}/>
-                <TextField   label="score"value={Score} onChange={e => setScore(e.target.value)}/>
-                <Switch label="Realizado" value={Realizado} onChange={e => setRealizado(true)}/>
-                <FormControl>
+                <Box sx={{ width: 300 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Seleccione</InputLabel>
                   <Select
+                    labelId="demo-simple-select-label"
+                    value={Dia}
+                    onChange={e => setDia(e.target.value)}
+                    required
+                  >
+                  <MenuItem  key={"Lunes"} value={"Lunes"}>Lunes</MenuItem>
+                  <MenuItem  key={"Martes"} value={"Martes"}>Martes</MenuItem>
+                  <MenuItem  key={"Miercoles"} value={"Miercoles"}>Miercoles</MenuItem>
+                  <MenuItem  key={"Jueves"} value={"Jueves"}>Jueves</MenuItem> 
+                  <MenuItem  key={"Viernes"} value={"Viernes"}>Viernes</MenuItem>
+                  <MenuItem  key={"Sabado"} value={"Sabado"}>Sabado</MenuItem>  
+                  <MenuItem  key={"Domingo"} value={"Domingo"}>Domingo</MenuItem>  
+                  </Select>
+                  </FormControl>
+                  </Box>
+                <TextField   label="Tarea" value={Tarea} onChange={e => setTarea(e.target.value)} required/>
+                <Switch label="Realizado" value={Realizado} checked={Realizado} onChange={() => setRealizado(value => !value)}/>
+                <Box sx={{ width: 300 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Seleccione</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
                     value={option}
                     onChange={e => setOption(e.target.value)}
+                    required
                   >
                   <MenuItem  key={"AgencyProjectsMarketing"} value={"AgencyMarketing"}>Agency 606 Projects Marketing</MenuItem>
                   <MenuItem  key={"AgencyProjectsDesign"} value={"AgencyProjects"}>Agency 606 Projects Design </MenuItem> 
                   
                   </Select>
                   </FormControl>
+                  </Box>
             </Box>
         </FormGroup>
         <br/>
