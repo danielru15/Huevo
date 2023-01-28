@@ -29,11 +29,11 @@ const Grafico = ({porcent_Tareas_Realizadas, porcent_Tareas_Pendientes}) => {
             label: '%',
             data: [porcent_Tareas_Realizadas, porcent_Tareas_Pendientes],
             backgroundColor: [
-              'rgba(0, 106, 2)',
+              'rgb(255, 203, 60)',
               'rgba(180, 14, 39)',
             ],
             borderColor: [
-              'rgba(0, 106, 2)',
+              'rgb(255, 203, 60)',
               'rgba(180, 14, 39)',
             ],
             borderWidth: 1,
